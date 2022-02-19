@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """Provides the :class:`ProxyJSON` class for JSON-RPC requests."""
@@ -29,7 +28,7 @@ else:
     def encode_data(data):
         try:
             return bytes(data, 'utf-8')
-        except:  # noqa: E722
+        except Exception:
             return bytes(data)
 
     def decode_data(data):
@@ -62,9 +61,7 @@ class Proxy(object):
     """Base class to implement a proxy to perform requests."""
 
     def __init__(self, host, port, timeout=120, ssl=False, opener=None):
-        self._root_url = "{http}{host}:{port}".format(
-            http=(ssl and "https://" or "http://"), host=host, port=port
-        )
+        self._root_url = "{http}{host}:{port}".format(http=(ssl and "https://" or "http://"), host=host, port=port)
         self._timeout = timeout
         self._builder = URLBuilder(self)
         self._opener = opener
@@ -87,9 +84,7 @@ class ProxyJSON(Proxy):
     to all JSON methods.
     """
 
-    def __init__(
-        self, host, port, timeout=120, ssl=False, opener=None, deserialize=True
-    ):
+    def __init__(self, host, port, timeout=120, ssl=False, opener=None, deserialize=True):
         Proxy.__init__(self, host, port, timeout, ssl, opener)
         self._deserialize = deserialize
 

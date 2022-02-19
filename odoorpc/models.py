@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """Provide the :class:`Model` class which allow to access dynamically to all
@@ -344,9 +343,7 @@ class Model(BaseModel):
                 basic_fields.append(field_name)
         # Fetch values from the server
         if self.ids:
-            rows = self.__class__.read(
-                self.ids, basic_fields, context=context, load='_classic_write'
-            )
+            rows = self.__class__.read(self.ids, basic_fields, context=context, load='_classic_write')
             ids_fetched = set()
             for row in rows:
                 ids_fetched.add(row['id'])
@@ -357,19 +354,13 @@ class Model(BaseModel):
             ids_in_error = set(self.ids) - ids_fetched
             if ids_in_error:
                 raise ValueError(
-                    "There is no '{model}' record with IDs {ids}.".format(
-                        model=self._name, ids=list(ids_in_error)
-                    )
+                    "There is no '{model}' record with IDs {ids}.".format(model=self._name, ids=list(ids_in_error))
                 )
         # No ID: fields filled with default values
         else:
-            default_get = self.__class__.default_get(
-                list(self._columns), context=context
-            )
+            default_get = self.__class__.default_get(list(self._columns), context=context)
             for field_name in self._columns:
-                self._values[field_name][None] = default_get.get(
-                    field_name, False
-                )
+                self._values[field_name][None] = default_get.get(field_name, False)
 
     def __getattr__(self, method):
         """Provide a dynamic access to a RPC *instance* method (which applies

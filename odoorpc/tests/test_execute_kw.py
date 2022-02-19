@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import numbers
 import time
 
@@ -28,9 +26,7 @@ class TestExecuteKw(LoginTestCase):
 
     def test_execute_kw_search_without_args(self):
         # Handle exception (execute a 'search' without args)
-        self.assertRaises(
-            odoorpc.error.RPCError, self.odoo.execute_kw, 'res.users', 'search'
-        )
+        self.assertRaises(odoorpc.error.RPCError, self.odoo.execute_kw, 'res.users', 'search')
 
     def test_execute_kw_search_with_wrong_args(self):
         # Handle exception (execute a 'search' with wrong args)
@@ -71,9 +67,7 @@ class TestExecuteKw(LoginTestCase):
     def test_execute_kw_create_with_good_args(self):
         login = "{}_{}".format("foobar", time.time())
         # Check the result returned
-        result = self.odoo.execute_kw(
-            'res.users', 'create', [{'name': login, 'login': login}]
-        )
+        result = self.odoo.execute_kw('res.users', 'create', [{'name': login, 'login': login}])
         self.assertIsInstance(result, numbers.Number)
         # Handle exception (create another user with the same login)
         self.assertRaises(
@@ -86,9 +80,7 @@ class TestExecuteKw(LoginTestCase):
 
     def test_execute_kw_create_without_args(self):
         # Handle exception (execute a 'create' without args)
-        self.assertRaises(
-            odoorpc.error.RPCError, self.odoo.execute_kw, 'res.users', 'create'
-        )
+        self.assertRaises(odoorpc.error.RPCError, self.odoo.execute_kw, 'res.users', 'create')
 
     def test_execute_kw_create_with_wrong_args(self):
         # Handle exception (execute a 'create' with wrong args)

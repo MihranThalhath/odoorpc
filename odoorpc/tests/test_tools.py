@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoorpc import tools
 from odoorpc.tests import BaseTestCase
 

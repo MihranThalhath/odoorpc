@@ -1,15 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 
 import setuptools
 
 name = 'OdooRPC'
 version = '0.8.0'
-description = (
-    "OdooRPC is a Python package providing an easy way to "
-    "pilot your Odoo servers through RPC."
-)
+description = "OdooRPC is a Python package providing an easy way to " "pilot your Odoo servers through RPC."
 with open("README.rst", "r") as readme:
     long_description = readme.read()
 keywords = (
@@ -46,10 +42,7 @@ try:
         }
     )
 except Exception:
-    print(
-        "No Sphinx module found. You have to install Sphinx "
-        "to be able to generate the documentation."
-    )
+    print("No Sphinx module found. You have to install Sphinx " "to be able to generate the documentation.")
 
 setuptools.setup(
     name=name,

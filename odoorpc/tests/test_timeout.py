@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import socket
 
 from odoorpc.tests import LoginTestCase
@@ -23,6 +21,4 @@ class TestTimeout(LoginTestCase):
         report_name = 'web.preview_internalreport'
         if v(self.odoo.version)[0] < 11:
             report_name = 'preview.report'
-        self.assertRaises(
-            socket.timeout, self.odoo.report.download, report_name, [1]
-        )
+        self.assertRaises(socket.timeout, self.odoo.report.download, report_name, [1])

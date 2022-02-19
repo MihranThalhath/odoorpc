@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """Provide the :class:`DB` class to manage the server databases."""
@@ -113,9 +112,7 @@ class DB(object):
         args = [password, db]
         if v(self._odoo.version)[0] >= 9:
             args.append(format_)
-        data = self._odoo.json(
-            '/jsonrpc', {'service': 'db', 'method': 'dump', 'args': args}
-        )
+        data = self._odoo.json('/jsonrpc', {'service': 'db', 'method': 'dump', 'args': args})
         # Encode to bytes forced to be compatible with Python 3.2
         # (its 'base64.standard_b64decode()' function only accepts bytes)
         result = encode2bytes(data['result'])
@@ -154,9 +151,7 @@ class DB(object):
             },
         )
 
-    def create(
-        self, password, db, demo=False, lang='en_US', admin_password='admin'
-    ):
+    def create(self, password, db, demo=False, lang='en_US', admin_password='admin'):
         """Request the server to create a new database named `db`
         which will have `admin_password` as administrator password and
         localized with the `lang` parameter.
@@ -266,9 +261,7 @@ class DB(object):
         :return: `list` of database names
         :raise: `urllib.error.URLError` (connection error)
         """
-        data = self._odoo.json(
-            '/jsonrpc', {'service': 'db', 'method': 'list', 'args': []}
-        )
+        data = self._odoo.json('/jsonrpc', {'service': 'db', 'method': 'list', 'args': []})
         return data.get('result', [])
 
     def restore(self, password, db, dump, copy=False):

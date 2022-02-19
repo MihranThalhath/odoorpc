@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module provides `Connector` classes to communicate with an `Odoo`
@@ -285,9 +284,7 @@ class ConnectorJSONRPCSSL(ConnectorJSONRPC):
         deserialize=True,
         opener=None,
     ):
-        super(ConnectorJSONRPCSSL, self).__init__(
-            host, port, timeout, version, opener=opener
-        )
+        super(ConnectorJSONRPCSSL, self).__init__(host, port, timeout, version, opener=opener)
         self._proxy_json, self._proxy_http = self._get_proxies()
 
     @property

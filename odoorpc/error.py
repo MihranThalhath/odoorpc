@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module contains all exceptions raised by `OdooRPC` when an error
@@ -9,8 +8,6 @@ import sys
 
 class Error(Exception):
     """Base class for exception."""
-
-    pass
 
 
 class RPCError(Error):
@@ -92,5 +89,3 @@ class RPCError(Error):
 
 class InternalError(Error):
     """Exception raised for errors occurring during an internal operation."""
-
-    pass

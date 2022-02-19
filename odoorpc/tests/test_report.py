@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import tempfile
 
 from odoorpc.tests import LoginTestCase
@@ -28,9 +26,7 @@ class TestReport(LoginTestCase):
             file_.write(report.read())
 
     def test_report_download_wrong_report_name(self):
-        self.assertRaises(
-            ValueError, self.odoo.report.download, 'wrong_report', [1]
-        )
+        self.assertRaises(ValueError, self.odoo.report.download, 'wrong_report', [1])
 
     def test_report_list(self):
         res = self.odoo.report.list()
@@ -39,9 +35,4 @@ class TestReport(LoginTestCase):
         if v(self.odoo.version)[0] < 13:
             model = 'account.invoice'
         self.assertIn(model, res)
-        self.assertTrue(
-            any(
-                'account.report_invoice' in data['report_name']
-                for data in res[model]
-            )
-        )
+        self.assertTrue(any('account.report_invoice' in data['report_name'] for data in res[model]))

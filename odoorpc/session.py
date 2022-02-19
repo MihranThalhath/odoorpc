@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module contains some helper functions used to save and load sessions
@@ -114,9 +113,7 @@ def get(name, rc_file='~/.odoorpcrc'):
     conf = ConfigParser()
     conf.read([os.path.expanduser(rc_file)])
     if not conf.has_section(name):
-        raise ValueError(
-            "'{}' session does not exist in {}".format(name, rc_file)
-        )
+        raise ValueError("'{}' session does not exist in {}".format(name, rc_file))
     return {
         'type': conf.get(name, 'type'),
         'host': conf.get(name, 'host'),
@@ -182,9 +179,7 @@ def remove(name, rc_file='~/.odoorpcrc'):
     conf = ConfigParser()
     conf.read([os.path.expanduser(rc_file)])
     if not conf.has_section(name):
-        raise ValueError(
-            "'{}' session does not exist in {}".format(name, rc_file)
-        )
+        raise ValueError("'{}' session does not exist in {}".format(name, rc_file))
     conf.remove_section(name)
     with open(os.path.expanduser(rc_file), 'wb') as file_:
         conf.write(file_)

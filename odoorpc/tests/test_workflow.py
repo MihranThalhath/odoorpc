@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 from odoorpc import error, tools
 from odoorpc.tests import LoginTestCase
 

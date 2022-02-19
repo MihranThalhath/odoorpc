@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import time
 
 from odoorpc.env import Environment
@@ -56,9 +54,7 @@ class TestEnvironment(LoginTestCase):
         # We test with 'auto_commit' deactivated since the commit is implicit
         # by default and sufficiently tested in the 'test_field_*' modules.
         self.odoo.config['auto_commit'] = False
-        user_id = self.user_obj.create(
-            {'name': "TestCommit", 'login': "test_commit_%s" % time.time()}
-        )
+        user_id = self.user_obj.create({'name': "TestCommit", 'login': "test_commit_%s" % time.time()})
         user = self.user_obj.browse(user_id)
         self.assertNotIn(user, self.odoo.env.dirty)
         user.name = "Bob"

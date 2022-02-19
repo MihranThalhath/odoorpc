@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module contains the :class:`Config <odoorpc.config.Config>` class which
@@ -6,7 +5,6 @@ manage the configuration related to an instance of
 :class:`ODOO <odoorpc.ODOO>`, and some useful helper functions used internally
 in `OdooRPC`.
 """
-import collections
 import re
 import sys
 

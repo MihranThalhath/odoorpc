@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module contains the ``ODOO`` class which is the entry point to manage
@@ -92,9 +91,7 @@ class ODOO(object):
         self._report = Report(self)
         # Instanciate the server connector
         try:
-            self._connector = rpc.PROTOCOLS[protocol](
-                self._host, self._port, timeout, version, opener=opener
-            )
+            self._connector = rpc.PROTOCOLS[protocol](self._host, self._port, timeout, version, opener=opener)
         except rpc.error.ConnectorError as exc:
             raise error.InternalError(exc.message)
         # Dictionary of configuration options
@@ -270,9 +267,7 @@ class ODOO(object):
         """
         data = self._connector.proxy_json(url, params)
         if data.get('error'):
-            raise error.RPCError(
-                data['error']['data']['message'], data['error']
-            )
+            raise error.RPCError(data['error']['data']['message'], data['error'])
         return data
 
     def http(self, url, data=None, headers=None):
@@ -506,9 +501,7 @@ class ODOO(object):
         :raise: `urllib.error.URLError` (connection error)
         """
         if tools.v(self.version)[0] >= 11:
-            raise DeprecationWarning(
-                u"Workflows have been removed in Odoo >= 11.0"
-            )
+            raise DeprecationWarning(u"Workflows have been removed in Odoo >= 11.0")
         self._check_logged_user()
         # Execute the workflow query
         args_to_send = [
@@ -596,18 +589,14 @@ class ODOO(object):
         """
         data = session.get(name, rc_file)
         if data.get('type') != cls.__name__:
-            raise error.InternalError(
-                "'{}' session is not of type '{}'".format(name, cls.__name__)
-            )
+            raise error.InternalError("'{}' session is not of type '{}'".format(name, cls.__name__))
         odoo = cls(
             host=data['host'],
             protocol=data['protocol'],
             port=data['port'],
             timeout=data['timeout'],
         )
-        odoo.login(
-            db=data['database'], login=data['user'], password=data['passwd']
-        )
+        odoo.login(db=data['database'], login=data['user'], password=data['passwd'])
         return odoo
 
     @classmethod
@@ -635,11 +624,7 @@ class ODOO(object):
         :raise: `FileNotFoundError`
         """
         sessions = session.get_all(rc_file)
-        return [
-            name
-            for name in sessions
-            if sessions[name].get('type') == cls.__name__
-        ]
+        return [name for name in sessions if sessions[name].get('type') == cls.__name__]
         # return session.list(rc_file)
 
     @classmethod
@@ -666,7 +651,5 @@ class ODOO(object):
         """
         data = session.get(name, rc_file)
         if data.get('type') != cls.__name__:
-            raise error.InternalError(
-                "'{}' session is not of type '{}'".format(name, cls.__name__)
-            )
+            raise error.InternalError("'{}' session is not of type '{}'".format(name, cls.__name__))
         return session.remove(name, rc_file)

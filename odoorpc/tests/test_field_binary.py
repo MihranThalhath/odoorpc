@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import base64
 
 from odoorpc.tests import LoginTestCase

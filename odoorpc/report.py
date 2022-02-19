@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module provide the :class:`Report` class to list available reports and
@@ -115,9 +114,7 @@ class Report(object):
             IrReport = self._odoo.env['ir.actions.report']
             report = IrReport.browse(report_id)
             if v(self._odoo.version)[0] >= 14:
-                response = report.with_context(context)._render(
-                    ids, data=datas
-                )
+                response = report.with_context(context)._render(ids, data=datas)
             else:
                 response = report.with_context(context).render(ids, data=datas)
             content = response[0]
@@ -199,9 +196,7 @@ class Report(object):
             report_model = 'ir.actions.report.xml'
         IrReport = self._odoo.env[report_model]
         report_ids = IrReport.search([])
-        reports = IrReport.read(
-            report_ids, ['name', 'model', 'report_name', 'report_type']
-        )
+        reports = IrReport.read(report_ids, ['name', 'model', 'report_name', 'report_type'])
         result = {}
         for report in reports:
             model = report.pop('model')

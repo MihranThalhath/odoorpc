@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """This module contains classes representing the fields supported by Odoo.
 A field is a Python descriptor which defines getter/setter methods for
 its related attribute.
 """
-from datetime import datetime, date, timedelta
-from pytz import timezone, UTC
+from datetime import datetime
+from pytz import timezone
 import sys
 
 # from odoorpc import error
@@ -87,9 +86,9 @@ def tuples2ids(tuples, ids):
 def records2ids(iterable):
     """Replace records contained in `iterable` with their corresponding IDs:
 
-        >>> groups = list(odoo.env.user.groups_id)
-        >>> records2ids(groups)
-        [1, 2, 3, 14, 17, 18, 19, 7, 8, 9, 5, 20, 21, 22, 23]
+    >>> groups = list(odoo.env.user.groups_id)
+    >>> records2ids(groups)
+    [1, 2, 3, 14, 17, 18, 19, 7, 8, 9, 5, 20, 21, 22, 23]
     """
 
     def record2id(elt):
@@ -159,11 +158,7 @@ class BaseField(object):
             if not is_string(value):
                 raise ValueError("Value supplied has to be a string")
             if len(value) > self.size:
-                raise ValueError(
-                    "Lenght of the '{}' is limited to {}".format(
-                        self.name, self.size
-                    )
-                )
+                raise ValueError("Lenght of the '{}' is limited to {}".format(self.name, self.size))
         if not value and self.required:
             raise ValueError("'{}' field is required".format(self.name))
         return value
@@ -310,8 +305,7 @@ class Datetime(BaseField):
         if date and new_tz:
             new_tz, old_tz = timezone(new_tz), timezone("UTC")
             dt_planned = old_tz.localize(date)
-            date = datetime.strftime(dt_planned.astimezone(new_tz),
-                                     self.pattern)
+            date = datetime.strftime(dt_planned.astimezone(new_tz), self.pattern)
         return date
 
 
@@ -385,9 +379,7 @@ class Selection(BaseField):
         if value and value not in selection:
             raise ValueError(
                 "The value '{}' supplied doesn't match with the possible "
-                "values '{}' for the '{}' field".format(
-                    value, selection, self.name
-                )
+                "values '{}' for the '{}' field".format(value, selection, self.name)
             )
         return value
 
@@ -410,9 +402,7 @@ class Many2many(BaseField):
         if ids is None:
             args = [[instance.id], [self.name]]
             kwargs = {'context': self.context, 'load': '_classic_write'}
-            orig_ids = instance._odoo.execute_kw(
-                instance._name, 'read', args, kwargs
-            )[0][self.name]
+            orig_ids = instance._odoo.execute_kw(instance._name, 'read', args, kwargs)[0][self.name]
             instance._values[self.name][instance.id] = orig_ids
             ids = orig_ids and orig_ids[:] or []
         # Take updated values into account
@@ -448,10 +438,7 @@ class Many2many(BaseField):
                 and not isinstance(value, Model)
                 and not isinstance(value, IncrementalRecords)
             ):
-                raise ValueError(
-                    "The value supplied has to be a list, a recordset "
-                    "or 'False'"
-                )
+                raise ValueError("The value supplied has to be a list, a recordset " "or 'False'")
         return super(Many2many, self).check_value(value)
 
     def store(self, record, value):
@@ -479,9 +466,7 @@ class Many2one(BaseField):
         if id_ is None:
             args = [[instance.id], [self.name]]
             kwargs = {'context': self.context, 'load': '_classic_write'}
-            id_ = instance._odoo.execute_kw(
-                instance._name, 'read', args, kwargs
-            )[0][self.name]
+            id_ = instance._odoo.execute_kw(instance._name, 'read', args, kwargs)[0][self.name]
             instance._values[self.name][instance.id] = id_
         Relation = instance.env[self.relation]
         if id_:
@@ -502,16 +487,11 @@ class Many2one(BaseField):
         elif value in [None, False]:
             o_rel = False
         else:
-            raise ValueError(
-                "Value supplied has to be an integer, "
-                "a record object or 'None/False'."
-            )
+            raise ValueError("Value supplied has to be an integer, " "a record object or 'None/False'.")
         o_rel = self.check_value(o_rel)
         # instance.__data__['updated_values'][self.name] = \
         #    o_rel and [o_rel.id, False]
-        instance._values_to_write[self.name][instance.id] = (
-            o_rel and o_rel.id or False
-        )
+        instance._values_to_write[self.name][instance.id] = o_rel and o_rel.id or False
         super(Many2one, self).__set__(instance, value)
 
     def check_value(self, value):
@@ -548,9 +528,7 @@ class One2many(BaseField):
         if ids is None:
             args = [[instance.id], [self.name]]
             kwargs = {'context': self.context, 'load': '_classic_write'}
-            orig_ids = instance._odoo.execute_kw(
-                instance._name, 'read', args, kwargs
-            )[0][self.name]
+            orig_ids = instance._odoo.execute_kw(instance._name, 'read', args, kwargs)[0][self.name]
             instance._values[self.name][instance.id] = orig_ids
             ids = orig_ids and orig_ids[:] or []
         # Take updated values into account
@@ -585,10 +563,7 @@ class One2many(BaseField):
                 and not isinstance(value, Model)
                 and not isinstance(value, IncrementalRecords)
             ):
-                raise ValueError(
-                    "The value supplied has to be a list, a recordset "
-                    "or 'False'"
-                )
+                raise ValueError("The value supplied has to be a list, a recordset " "or 'False'")
         return super(One2many, self).check_value(value)
 
     def store(self, record, value):
@@ -616,9 +591,7 @@ class Reference(BaseField):
         if value is None:
             args = [[instance.id], [self.name]]
             kwargs = {'context': self.context, 'load': '_classic_write'}
-            value = instance._odoo.execute_kw(
-                instance._name, 'read', args, kwargs
-            )[0][self.name]
+            value = instance._odoo.execute_kw(instance._name, 'read', args, kwargs)[0][self.name]
             instance._values_to_write[self.name][instance.id] = value
         if value:
             parts = value.rpartition(',')
@@ -632,9 +605,7 @@ class Reference(BaseField):
                     context = instance.env.context.copy()
                     context.update(self.context)
                     env = instance.env(context=context)
-                return Relation._browse(
-                    env, o_id, from_record=(instance, self)
-                )
+                return Relation._browse(env, o_id, from_record=(instance, self))
         return False
 
     def __set__(self, instance, value):
@@ -652,9 +623,7 @@ class Reference(BaseField):
                 (
                     "The value '{value}' supplied doesn't match with the possible"
                     " values '{selection}' for the '{field_name}' field"
-                ).format(
-                    value=relation, selection=selection, field_name=self.name
-                )
+                ).format(value=relation, selection=selection, field_name=self.name)
             )
         return relation
 
@@ -672,16 +641,10 @@ class Reference(BaseField):
             o_id = o_id.strip()
             # o_rel = instance.__class__.__odoo__.browse(relation, o_id)
             if not relation or not is_int(o_id):
-                raise ValueError(
-                    "String not well formatted, expecting "
-                    "'{relation},{id}' format"
-                )
+                raise ValueError("String not well formatted, expecting " "'{relation},{id}' format")
             self._check_relation(relation)
         else:
-            raise ValueError(
-                "Value supplied has to be a string or"
-                " a browse_record object."
-            )
+            raise ValueError("Value supplied has to be a string or" " a browse_record object.")
         return value
 
 

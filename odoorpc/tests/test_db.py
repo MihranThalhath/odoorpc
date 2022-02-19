@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import zipfile
 from datetime import datetime
 
@@ -62,9 +60,7 @@ class TestDB(BaseTestCase):
         date = datetime.strftime(datetime.today(), '%Y%m%d_%Hh%Mm%S')
         new_database = "{}_{}".format(self.env['db'], date)
         self.databases.append(new_database)
-        self.odoo.db.duplicate(
-            self.env['super_pwd'], self.env['db'], new_database
-        )
+        self.odoo.db.duplicate(self.env['super_pwd'], self.env['db'], new_database)
         res = self.odoo.db.drop(self.env['super_pwd'], new_database)
         self.assertTrue(res)
 
@@ -76,9 +72,7 @@ class TestDB(BaseTestCase):
         date = datetime.strftime(datetime.today(), '%Y%m%d_%Hh%Mm%S')
         new_database = "{}_{}".format(self.env['db'], date)
         self.databases.append(new_database)
-        self.odoo.db.duplicate(
-            self.env['super_pwd'], self.env['db'], new_database
-        )
+        self.odoo.db.duplicate(self.env['super_pwd'], self.env['db'], new_database)
         self.assertRaises(
             odoorpc.error.RPCError,
             self.odoo.db.drop,
@@ -90,9 +84,7 @@ class TestDB(BaseTestCase):
         date = datetime.strftime(datetime.today(), '%Y%m%d_%Hh%Mm%S')
         new_database = "{}_{}".format(self.env['db'], date)
         self.databases.append(new_database)
-        self.odoo.db.duplicate(
-            self.env['super_pwd'], self.env['db'], new_database
-        )
+        self.odoo.db.duplicate(self.env['super_pwd'], self.env['db'], new_database)
 
     def test_db_duplicate_wrong_database(self):
         date = datetime.strftime(datetime.today(), '%Y%m%d_%Hh%Mm%S')
@@ -157,9 +149,7 @@ class TestDB(BaseTestCase):
         date = datetime.strftime(datetime.today(), '%Y%m%d_%Hh%Mm%S')
         new_database = "{}_{}".format(self.env['db'], date)
         self.databases.append(new_database)
-        self.odoo.db.duplicate(
-            self.env['super_pwd'], self.env['db'], new_database
-        )
+        self.odoo.db.duplicate(self.env['super_pwd'], self.env['db'], new_database)
         self.odoo.login(new_database, self.env['user'], self.env['pwd'])
         res = self.odoo.db.drop(self.env['super_pwd'], new_database)
         self.assertTrue(res)
@@ -170,5 +160,5 @@ class TestDB(BaseTestCase):
         for db in self.databases:
             try:
                 self.odoo.db.drop(self.env['super_pwd'], db)
-            except:  # noqa: E722
+            except Exception:
                 pass

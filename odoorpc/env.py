@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Sébastien Alix
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 """Supply the :class:`Environment` class to manage records more efficiently."""
@@ -41,9 +40,7 @@ class Environment(object):
         self._dirty = weakref.WeakSet()  # set of records updated locally
 
     def __repr__(self):
-        return "Environment(db={}, uid={}, context={})".format(
-            repr(self._db), self._uid, self._context
-        )
+        return "Environment(db={}, uid={}, context={})".format(repr(self._db), self._uid, self._context)
 
     @property
     def dirty(self):
@@ -174,9 +171,7 @@ class Environment(object):
         :return: a :class:`odoorpc.models.Model` instance (recordset)
         :raise: :class:`odoorpc.error.RPCError`
         """
-        model, id_ = self._odoo.execute(
-            'ir.model.data', 'xmlid_to_res_model_res_id', xml_id, True
-        )
+        model, id_ = self._odoo.execute('ir.model.data', 'xmlid_to_res_model_res_id', xml_id, True)
         return self[model].browse(id_)
 
     @property
@@ -290,9 +285,7 @@ class Environment(object):
 
         :return: `True` or `False`
         """
-        model_exists = self._odoo.execute(
-            'ir.model', 'search', [('model', '=', model)]
-        )
+        model_exists = self._odoo.execute('ir.model', 'search', [('model', '=', model)])
         return bool(model_exists)
 
     def _create_model_class(self, model):
@@ -316,7 +309,7 @@ class Environment(object):
         fields_get = self._odoo.execute(model, 'fields_get')
         for field_name, field_data in fields_get.items():
             if field_name not in FIELDS_RESERVED:
-                field_data['context'] = self._context # pass context to new fields ...
+                field_data['context'] = self._context  # pass context to new fields ...
                 Field = fields.generate_field(field_name, field_data)
                 attrs['_columns'][field_name] = Field
                 attrs[field_name] = Field

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoorpc.models import Model
 from odoorpc.tests import LoginTestCase
 from odoorpc.tools import v
@@ -12,9 +10,7 @@ class TestFieldReference(LoginTestCase):
             Claim = self.odoo.env['crm.claim']
             claim_id = Claim.search([])[0]
             # Test field containing a value
-            self.odoo.execute(
-                'crm.claim', 'write', [claim_id], {'ref': 'res.partner,1'}
-            )
+            self.odoo.execute('crm.claim', 'write', [claim_id], {'ref': 'res.partner,1'})
             claim = Claim.browse(claim_id)
             self.assertIsInstance(claim.ref, Model)
             self.assertEqual(claim.ref._name, 'res.partner')

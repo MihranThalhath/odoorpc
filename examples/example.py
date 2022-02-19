@@ -14,9 +14,7 @@ PASSWORD = 'password'
 
 try:
     # Login
-    oerp = oerplib.OERP(
-        server=SERVER, database=DATABASE, protocol=PROTOCOL, port=PORT
-    )
+    oerp = oerplib.OERP(server=SERVER, database=DATABASE, protocol=PROTOCOL, port=PORT)
     oerp.login(USER, PASSWORD)
 
     # ----------------------- #

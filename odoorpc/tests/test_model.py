@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import time
 
 from odoorpc import error
@@ -16,9 +14,7 @@ class TestModel(LoginTestCase):
         self.p1_id = self.partner_obj.create({'name': "Child 1"})
         self.p2_id = self.partner_obj.create({'name': "Child 2"})
         self.group_obj = self.odoo.env['res.groups']
-        self.u0_id = self.user_obj.create(
-            {'name': "TestOdooRPC", 'login': 'test_%s' % time.time()}
-        )
+        self.u0_id = self.user_obj.create({'name': "TestOdooRPC", 'login': 'test_%s' % time.time()})
         self.g1_id = self.group_obj.create({'name': "Group 1"})
         self.g2_id = self.group_obj.create({'name': "Group 2"})
 
@@ -46,12 +42,8 @@ class TestModel(LoginTestCase):
         self.assertEqual(len(partner), 0)
 
     def test_model_browse_wrong_id(self):
-        self.assertRaises(
-            ValueError, self.partner_obj.browse, 9999999
-        )  # Wrong ID
-        self.assertRaises(
-            error.RPCError, self.partner_obj.browse, "1"
-        )  # Wrong ID type
+        self.assertRaises(ValueError, self.partner_obj.browse, 9999999)  # Wrong ID
+        self.assertRaises(error.RPCError, self.partner_obj.browse, "1")  # Wrong ID type
 
     def test_model_browse_without_arg(self):
         self.assertRaises(TypeError, self.partner_obj.browse)
@@ -73,9 +65,7 @@ class TestModel(LoginTestCase):
 
     def test_model_with_context(self):
         Product = self.odoo.env['product.product']
-        product_id = Product.create(
-            {'name': u"Product invisible", 'active': False}
-        )
+        product_id = Product.create({'name': u"Product invisible", 'active': False})
         product_ids = Product.search([])
         self.assertNotIn(product_id, product_ids)
         product_ids = Product.with_context(active_test=False).search([])
