@@ -2,18 +2,6 @@
 OdooRPC
 =======
 
-.. image:: https://img.shields.io/pypi/v/OdooRPC.svg
-    :target: https://pypi.python.org/pypi/OdooRPC/
-    :alt: Latest Version
-
-.. image:: https://travis-ci.org/OCA/odoorpc.svg?branch=master
-    :target: https://travis-ci.org/OCA/odoorpc
-    :alt: Build Status
-
-.. image:: https://img.shields.io/pypi/pyversions/OdooRPC.svg
-    :target: https://pypi.python.org/pypi/OdooRPC/
-    :alt: Supported Python versions
-
 .. image:: https://img.shields.io/pypi/l/OdooRPC.svg
     :target: https://pypi.python.org/pypi/OdooRPC/
     :alt: License
@@ -79,7 +67,7 @@ Supported Odoo server versions
 Supported Python versions
 =========================
 
-`OdooRPC` support Python 2.7, 3.4, 3.5 and 3.6.
+`OdooRPC` support Python 2.7, 3.4, 3.5 and 3.6, 3.7, 3.8, 3.9 and 3.10.
 
 License
 =======
