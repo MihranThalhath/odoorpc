@@ -8,13 +8,19 @@ in `OdooRPC`.
 """
 import collections
 import re
+import sys
+
+if sys.version_info >= (3, 3):
+    from collections.abc import MutableMapping
+else:
+    from collections import MutableMapping
 
 from .error import InternalError
 
 MATCH_VERSION = re.compile(r'[^\d.]')
 
 
-class Config(collections.MutableMapping):
+class Config(MutableMapping):
     """Class which manage the configuration of an
     :class:`ODOO <odoorpc.ODOO>` instance.
 
